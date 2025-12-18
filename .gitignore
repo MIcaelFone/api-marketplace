@@ -23,7 +23,37 @@ lerna-debug.log*
 /.idea
 .project
 .classpath
-.c9/
+.c9/# Dependências
+node_modules/
+pnpm-lock.yaml
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Coverage
+coverage/
+*.lcov
 *.launch
 .settings/
 *.sublime-workspace
