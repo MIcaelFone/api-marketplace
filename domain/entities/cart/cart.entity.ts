@@ -45,11 +45,25 @@ export class CartEntity {
         );
     }
     addItem(item: CartItemEntity): void {
-        this.itens.push(item);
+        const existingItem = this.itens.find(i => {
+            // Verifica por ID se ambos tiverem
+            if (i.getId() !== null && item.getId() !== null) {
+                return i.getId() === item.getId();
+            }
+            // Verifica por productId para evitar duplicação
+            return i.getProductId() === item.getProductId();
+        });
+        
+        if(existingItem){
+            // Se já existe, incrementa a quantidade ao invés de adicionar novo
+            existingItem.incrementQuantity(item.getQuantity());
+        } else {
+            this.itens.push(item);
+        }
         this.updatedAt = new Date();
     }
     removeItem(itemId: number): void {
-        this.itens = this.itens.filter(item => item['id'] !== itemId);
+        this.itens = this.itens.filter(item => item.getId() !== itemId);
         this.updatedAt = new Date();
     }
     getId(): number | null {
@@ -66,6 +80,11 @@ export class CartEntity {
     }
     getUpdatedAt(): Date {
         return this.updatedAt;
+    }
+    getTotalPrice(): number {
+        return this.itens.reduce((total, item) => {
+            return total + (item.getpriceAtTime() * item.getQuantity());
+        }, 0);
     }
     
 } 
