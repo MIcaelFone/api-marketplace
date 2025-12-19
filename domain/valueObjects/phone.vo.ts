@@ -47,6 +47,14 @@ export class Phone {
     return new Phone(countryCode, areaCode, number);
   }
 
+  static createWithParts(countryCode: string, areaCode: string, number: string): Phone {
+    return new Phone(countryCode, areaCode, number);
+  }
+
+  static restore(countryCode: string, areaCode: string, number: string): Phone {
+    return new Phone(countryCode, areaCode, number);
+  }
+
   getValue(): string {
     return `${this.countryCode}${this.areaCode}${this.number}`;
   }
