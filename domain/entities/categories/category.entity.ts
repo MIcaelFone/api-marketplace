@@ -22,7 +22,10 @@ export class CategoryEntity {
             throw new Error('Description is required');
         }
         if (this.description.length < 30) {
-            throw new Error('Description cannot exceed 30 characters');
+            throw new Error('Description must be at least 30 characters long');
+        }
+        if (this.description.length > 500) {
+            throw new Error('Description cannot exceed 500 characters');
         }
     }
     static create(name: string, description: string): CategoryEntity {
@@ -50,15 +53,24 @@ export class CategoryEntity {
         if (newName.length < 3) {
             throw new Error('Name must be at least 3 characters long');
         }
+        if(newName.length > 100){
+            throw new Error('Name cannot exceed 100 characters');
+        }
+        if (newName === this.name) {
+            throw new Error('New name must be different from the current name');
+        }
         this.name = newName;
         this.updatedAt = new Date();
     }
     updateDescription(newDescription: string): void {
-        if (newDescription.length > 300) {
-            throw new Error('Description cannot exceed 300 characters');
-        }
         if (newDescription.trim() === '') {
             throw new Error('Description is required');
+        }
+        if (newDescription.length < 30) {
+            throw new Error('Description must be at least 30 characters long');
+        }
+        if (newDescription.length > 500) {
+            throw new Error('Description cannot exceed 500 characters');
         }
         this.description = newDescription;
         this.updatedAt = new Date();
