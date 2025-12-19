@@ -2,7 +2,6 @@ export class CartItemEntity {
     constructor(
         private readonly id: number | null,
         private readonly productId: number,
-        private readonly userId: number,
         private quantity: number,
         private readonly priceAtTime: number,
         private readonly createdAt: Date,
@@ -11,23 +10,21 @@ export class CartItemEntity {
     {
         this.validate();
     }
-    static create(productId:number, userId:number, quantity:number, priceAtTime:number,createdAt:Date): CartItemEntity {
+    static create(productId:number, quantity:number, priceAtTime:number): CartItemEntity {
         return new CartItemEntity(
             null,
             productId, 
-            userId, 
             quantity, 
             priceAtTime, 
             new Date(),
             new Date()
         );
     }
-    static restore(id:number,productId:number, userId:number, quantity:number, priceAtTime:number,createdAt:Date,updatedAt:Date): CartItemEntity{
+    static restore(id:number,productId:number, quantity:number, priceAtTime:number,createdAt:Date,updatedAt:Date): CartItemEntity{
         return new CartItemEntity
         (
             id,
             productId, 
-            userId,
             quantity,
             priceAtTime,
             createdAt,
@@ -36,8 +33,8 @@ export class CartItemEntity {
     }
 
     public validate() :void {
-        if(!Number.isInteger(this.id) && this.id !== null){
-            throw new Error("ID must be an integer or null.");
+        if(!Number.isInteger(this.id) && this.id <0 ){
+            throw new Error("ID must be an integer and not negative.");
         }
         if(this.quantity <= 0){
             throw new Error("Quantity must be greater than zero.");
@@ -68,6 +65,9 @@ export class CartItemEntity {
     }
     getId(): number | null {
         return this.id;
+    }
+    getProductId():number | null{
+        return this.productId;
     }
     getQuantity(): number {
         return this.quantity;

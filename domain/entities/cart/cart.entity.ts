@@ -46,10 +46,6 @@ export class CartEntity {
     }
     addItem(item: CartItemEntity): void {
         const existingItem = this.itens.find(i => {
-            // Verifica por ID se ambos tiverem
-            if (i.getId() !== null && item.getId() !== null) {
-                return i.getId() === item.getId();
-            }
             // Verifica por productId para evitar duplicação
             return i.getProductId() === item.getProductId();
         });

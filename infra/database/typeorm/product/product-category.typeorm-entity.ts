@@ -7,4 +7,4 @@ export class ProductCategoryEntity{
     name: string
     @Column()
     description: string
-}
+} 
