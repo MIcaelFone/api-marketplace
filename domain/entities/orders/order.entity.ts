@@ -13,8 +13,8 @@ export class OrderEntity {
         this.validate();
     }
     public validate(): void {
-        if(!Number.isInteger(this.id) && this.id === null){
-            throw new Error('ID must be an integer and not null');
+        if(this.id !== null && !Number.isInteger(this.id)){
+            throw new Error('ID must be an integer or null');
         }   
         if(!Number.isInteger(this.userId) || this.userId <= 0){
             throw new Error('User ID must be a positive integer');
@@ -82,6 +82,13 @@ export class OrderEntity {
             throw new Error('Delivered orders cannot be cancelled');
         }
         this.orderStatus = OrderStatusEnum.CANCELLED;
+        this.updatedAt = new Date();
+    }
+    shipOrder(): void {
+        if(this.orderStatus !== OrderStatusEnum.PROCESSING){
+            throw new Error('Only processing orders can be shipped');
+        }   
+        this.orderStatus = OrderStatusEnum.SHIPPED;
         this.updatedAt = new Date();
     }
     

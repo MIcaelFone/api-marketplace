@@ -14,8 +14,8 @@ export class OrderItemEntity {
         this.validate();
     }
     private validate():void {
-        if(!Number.isInteger(this.id) && this.id === null){
-            throw new Error('ID must be an integer and not null');
+        if(this.id !== null && !Number.isInteger(this.id)){
+            throw new Error('ID must be an integer or null');
         } 
         if(!Number.isInteger(this.productId) || this.productId <= 0){
             throw new Error('Product ID must be a positive integer');

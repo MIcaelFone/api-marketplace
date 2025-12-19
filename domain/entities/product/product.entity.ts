@@ -14,8 +14,8 @@ export class ProductEntity {
         this.validate();
     }
     public validate(): void {
-        if(!Number.isInteger(this.id) && this.id !== null){
-            throw new Error('ID must be an integer and null');
+        if(this.id !== null && !Number.isInteger(this.id)){
+            throw new Error('ID must be an integer or null');
         }
         if(!this.name || this.name.trim() === ''){
             throw new Error('Name is required');
@@ -27,7 +27,7 @@ export class ProductEntity {
             throw new Error('Description is required');
         }
         if (this.description.length < 50) {
-            throw new Error('Description cannot exceed 50 characters');
+            throw new Error('Description must be at least 50 characters long');
         }
         if(this.price < 0){
             throw new Error('Price must be greater than or equal to zero');
