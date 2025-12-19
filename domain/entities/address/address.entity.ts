@@ -1,3 +1,4 @@
+import { CEP } from '../../valueObjects/cep.vo';
 export class AddressEntity {
     private constructor(
         private readonly id: number | null,
@@ -5,8 +6,8 @@ export class AddressEntity {
         private street: string,
         private city: string,
         private state: string,
-        private zipCode: string,
         private country: string,
+        private CEP :CEP,
         private readonly createdAt: Date,
         private updatedAt: Date,
     ) {
@@ -37,11 +38,8 @@ export class AddressEntity {
         if(this.state.length < 2){
             throw new Error('State must be at least 2 characters long');
         }
-        if (!this.zipCode || this.zipCode.trim() === '') {
-            throw new Error('Zip code is required');
-        }
-        if(this.zipCode.length < 8){
-            throw new Error('Zip code must be at least 8 characters long');
+        if(this.CEP.getValue() === ""){
+            throw new Error('CEP is required');
         }
         if (!this.country || this.country.trim() === '') {
             throw new Error('Country is required');
@@ -56,28 +54,28 @@ export class AddressEntity {
             throw new Error('Updated at must be a valid Date or null');
         }   
     }
-    static create(userId: number, street: string, city: string, state: string, zipCode: string, country: string): AddressEntity {
+    static create(userId: number, street: string, city: string, state: string, country: string,CEP:CEP): AddressEntity {
         return new AddressEntity(
             null,
             userId,
             street,
             city,
             state,
-            zipCode,
             country,
+            CEP,
             new Date(),
             new Date()
         );
     }
-    static restore(id: number, userId: number, street: string, city: string, state: string, zipCode: string, country: string, createdAt: Date, updatedAt: Date): AddressEntity {
+    static restore(id: number, userId: number, street: string, city: string, state: string, country: string, createdAt: Date, updatedAt: Date,CEP:CEP): AddressEntity {
         return new AddressEntity(
             id,
             userId,
             street,
             city,
             state,
-            zipCode,
             country,
+            CEP,
             createdAt,
             updatedAt
         );
@@ -112,14 +110,30 @@ export class AddressEntity {
         this.state = newState;
         this.updatedAt = new Date();
     }
-    updateZipCode(newZipCode: string): void {
-        if (!newZipCode || newZipCode.trim() === '') {
-            throw new Error('Zip code is required');
+    updateCountry(newCountry: string): void {
+        if (!newCountry || newCountry.trim() === '') {
+            throw new Error('Country is required');
         }
-        if(newZipCode.length < 8){
-            throw new Error('Zip code must be at least 8 characters long');
+        if(newCountry.length < 2){
+            throw new Error('Country must be at least 2 characters long');
         }
-        this.zipCode = newZipCode;
+        if(this.country === newCountry){
+            throw new Error('New country must be different from the current country');
+        }
+        this.country = newCountry;
+        this.updatedAt = new Date();
+    }
+    updateCEP(newCEP:CEP): void {
+        if(newCEP.getValue() === ""){
+            throw new Error('CEP is required');
+        }
+        if(newCEP.getValue()===null){
+            throw new Error('CEP is invalid');
+        }
+        if(this.CEP.equals(newCEP)){
+            throw new Error('New CEP must be different from the current CEP');
+        }
+        this.CEP = newCEP;
         this.updatedAt = new Date();
     }
     getId(): number | null {
@@ -137,11 +151,11 @@ export class AddressEntity {
     getState(): string {
         return this.state;
     }
-    getZipCode(): string {
-        return this.zipCode;
-    }
     getCountry(): string {
         return this.country;
+    }
+    getCEP(): CEP {
+        return this.CEP;
     }
     getCreatedAt(): Date {
         return this.createdAt;
