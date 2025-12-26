@@ -39,9 +39,7 @@ export class Phone {
       areaCode = cleaned.substring(0, 2);
       number = cleaned.substring(2);
     } else {
-      throw new Error(
-        'Formato de telefone inválido. Use (XX) XXXXX-XXXX ou (XX) XXXX-XXXX',
-      );
+      throw new Error('Formato de telefone inválido. Use (XX) XXXXX-XXXX ou (XX) XXXX-XXXX');
     }
 
     return new Phone(countryCode, areaCode, number);
