@@ -5,21 +5,29 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CartTypeOrmEntity } from '../cart/cart.entity';
-import { ProductTypeOrmEntity } from '../product/product.typeorm-entity';
-@Entity('cart_items')
-export class CartItemTypeOrmEntity {
+
+@Entity('addresses')
+export class AddressTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
-  cartID: number;
+  userId: number;
 
   @Column({ nullable: false })
-  productID: number;
+  street: string;
 
-  @Column({ nullable: false, type: 'decimal' })
-  quantity: number;
+  @Column({ nullable: false })
+  city: string;
+
+  @Column({ nullable: false })
+  state: string;
+
+  @Column({ nullable: false })
+  country: string;
+
+  @Column({ nullable: false })
+  CEP: string;
 
   @CreateDateColumn()
   createdAt: Date;
