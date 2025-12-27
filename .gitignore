@@ -64,11 +64,7 @@ Desktop.ini
 
 # IDEs e Editores
 # VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 *.code-workspace
 
 # JetBrains
@@ -101,6 +97,9 @@ pids/
 *.pid
 *.seed
 *.pid.lock
+
+# Git Hooks
+.husky/
 
 # Debug e Performance
 .vscode-test/
