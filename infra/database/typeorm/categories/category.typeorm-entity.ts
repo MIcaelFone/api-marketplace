@@ -1,26 +1,20 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-@Entity('orders')
-export class OrderItemTypeormEntity {
+@Entity('categories')
+export class CategoryTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
-  userId: number;
+  @Column({ unique: true, nullable: false })
+  name: string;
 
   @Column({ nullable: false })
-  addressId: number;
-
-  @Column({ nullable: false, type: 'decimal' })
-  totalAmount: number;
-
-  @Column({ nullable: false })
-  orderStatus: string;
+  description: string;
 
   @CreateDateColumn()
   createdAt: Date;
