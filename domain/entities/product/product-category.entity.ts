@@ -19,13 +19,7 @@ export class productCategoryEntity {
       throw new Error('Category ID is required');
     }
   }
-  static create(
-    id: number,
-    productId: number,
-    categoryId: number,
-    createdAt: Date,
-    updatedAt: Date,
-  ): productCategoryEntity {
+  static create(id: number, productId: number, categoryId: number): productCategoryEntity {
     return new productCategoryEntity(id, productId, categoryId, new Date(), new Date());
   }
   static restore(

@@ -4,17 +4,33 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { ProductTypeOrmEntity } from './product.typeorm-entity';
+import { CategoryTypeOrmEntity } from '../categories/category.typeorm-entity';
 @Entity('product_categories')
 export class ProductCategoryTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ unique: true })
+
+  @Column()
   productId: number;
-  @Column({ unique: true })
+
+  @ManyToOne(() => ProductTypeOrmEntity, (product) => product.id)
+  @JoinColumn({ name: 'productId' })
+  product: ProductTypeOrmEntity;
+
+  @Column()
   categoryId: number;
-  @CreateDateColumn({ unique: true })
+
+  @ManyToOne(() => CategoryTypeOrmEntity, (category) => category.id)
+  @JoinColumn({ name: 'categoryId' })
+  category: CategoryTypeOrmEntity;
+
+  @CreateDateColumn()
   createdAt: Date;
-  @UpdateDateColumn({ unique: true })
+
+  @UpdateDateColumn()
   updatedAt: Date;
 }

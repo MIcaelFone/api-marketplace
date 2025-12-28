@@ -4,15 +4,21 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-
+import { UserTypeOrmEntity } from '../user/user.typeorm-entity';
 @Entity('addresses')
 export class AddressTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column()
   userId: number;
+
+  @ManyToOne(() => UserTypeOrmEntity, (user) => user.id)
+  @JoinColumn({ name: 'userId' })
+  user: UserTypeOrmEntity;
 
   @Column({ nullable: false })
   street: string;
