@@ -1,0 +1,87 @@
+services:
+  app:
+    container_name: api_marketplace
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    env_file:
+      - .env.production
+    environment:
+      # Application
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      # Database Connection (TypeORM usa DB_* não DATABASE_*)
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_DATABASE=${POSTGRES_DB}
+      - DB_SSL=false
+      # Redis Connection (para aplicação conectar)
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_TTL=${REDIS_TTL}
+      # JWT (se tiver no .env)
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+    ports:
+      - '${PORT}:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - marketplace_network
+    volumes:
+      - ./logs:/app/logs
+  postgres:
+    container_name: postgres_marketplace
+    image: postgres:15.15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - marketplace_network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    container_name: redis_marketplace
+    image: redis:7-alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
+    ports:
+      - '${REDIS_PORT}:6379'
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - marketplace_network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+networks:
+  marketplace_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
