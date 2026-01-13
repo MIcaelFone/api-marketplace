@@ -1,22 +1,33 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 @Entity('products')
 export class ProductTypeOrmEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
+
   @Column({ unique: true })
   name: string;
-  @Column()
+
+  @Column({ nullable: false })
   description: string;
+
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
-  @Column()
+
+  @Column({ nullable: false })
   stock: number;
-  @Column()
-  categoryId: number;
+
   @Column({ unique: true })
   sku: string;
-  @Column()
+
+  @CreateDateColumn()
   createdAt: Date;
-  @Column()
+
+  @UpdateDateColumn()
   updatedAt: Date;
 }

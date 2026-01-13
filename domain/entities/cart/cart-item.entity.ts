@@ -6,7 +6,7 @@ export class CartItemEntity {
     private readonly priceAtTime: number,
     private readonly createdAt: Date,
     private updatedAt: Date,
-    private readonly cartID?: number,
+    private readonly cartId?: number,
   ) {
     this.validate();
   }
@@ -14,7 +14,7 @@ export class CartItemEntity {
     productId: number,
     quantity: number,
     priceAtTime: number,
-    cartID: number,
+    cartId: number,
   ): CartItemEntity {
     return new CartItemEntity(
       null,
@@ -23,7 +23,7 @@ export class CartItemEntity {
       priceAtTime,
       new Date(),
       new Date(),
-      cartID,
+      cartId,
     );
   }
   static restore(
@@ -59,7 +59,7 @@ export class CartItemEntity {
     if (!(this.updatedAt instanceof Date) || isNaN(this.updatedAt.getTime())) {
       throw new Error('Updated at must be a valid Date.');
     }
-    if (!Number.isInteger(this.cartID) || this.cartID <= 0) {
+    if (!Number.isInteger(this.cartId || this.cartId <= 0)) {
       throw new Error('Cart ID must be a positive integer.');
     }
   }
@@ -96,6 +96,6 @@ export class CartItemEntity {
     return this.updatedAt;
   }
   getCartID(): number | null {
-    return this.cartID;
+    return this.cartId;
   }
 }

@@ -2,14 +2,14 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
+  CreateDateColumn,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
 import { UserTypeOrmEntity } from '../user/user.typeorm-entity';
-@Entity('addresses')
-export class AddressTypeOrmEntity {
+@Entity('carts')
+export class CartTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,21 +19,6 @@ export class AddressTypeOrmEntity {
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.id)
   @JoinColumn({ name: 'userId' })
   user: UserTypeOrmEntity;
-
-  @Column({ nullable: false })
-  street: string;
-
-  @Column({ nullable: false })
-  city: string;
-
-  @Column({ nullable: false })
-  state: string;
-
-  @Column({ nullable: false })
-  country: string;
-
-  @Column({ nullable: false })
-  CEP: string;
 
   @CreateDateColumn()
   createdAt: Date;
