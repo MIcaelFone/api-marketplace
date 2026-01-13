@@ -1,4 +1,4 @@
-import { OrderStatusEnum } from 'domain/enum/order-status.enum';
+import { OrderStatusEnum } from '@domain/enum/order-status.enum';
 export class OrderEntity {
   constructor(
     private readonly id: number | null,

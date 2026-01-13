@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { UserTypeTypeOrmEntity } from '../user/userType.typeorm-entity';
 
 @Entity('users')
@@ -21,13 +29,16 @@ export class UserTypeOrmEntity {
   @Column({ nullable: false })
   isactive: boolean;
 
-  @ManyToOne(() => UserTypeTypeOrmEntity, (userType) => userType.id)
-  @JoinColumn({ name: 'userType' })
-  userType: number;
+  @Column({ name: 'userTypeID', nullable: false })
+  userTypeID: number;
 
-  @Column({ nullable: false })
+  @ManyToOne(() => UserTypeTypeOrmEntity, (userType) => userType.id)
+  @JoinColumn({ name: 'userTypeID' })
+  userType: UserTypeTypeOrmEntity;
+
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ nullable: true })
-  updatedAt: Date | null;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

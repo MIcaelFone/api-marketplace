@@ -7,7 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { CartTypeOrmEntity } from './cart.entity';
+import { CartTypeOrmEntity } from './cart.typeorm-entity';
 import { ProductTypeOrmEntity } from '../product/product.typeorm-entity';
 @Entity('cart_items')
 export class CartItemTypeOrmEntity {
