@@ -19,12 +19,28 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": [],
+    "maxNodeModuleJsDepth": 0,
+    "disableSourceOfProjectReferenceRedirect": true,
+    "disableSolutionSearching": true,
+    "disableReferencedProjectLoad": true,
+    "assumeChangesOnlyAffectDirectDependencies": true,
+    "types": ["node", "jest"],
     "paths": {
       "@domain/*": ["domain/*"],
       "@application/*": ["application/*"],
       "@infra/*": ["infra/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "logs", ".husky"]
+  "include": ["src/**/*", "domain/**/*", "application/**/*", "infra/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*spec.ts",
+    "**/*.spec.ts",
+    "logs",
+    ".husky",
+    "coverage",
+    ".pnpm-store"
+  ]
 }

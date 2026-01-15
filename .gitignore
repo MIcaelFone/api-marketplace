@@ -8,11 +8,14 @@ package-lock.json
 
 # Build e Compilação
 /dist
+*.tsbuildinfo
+.tsbuildinfo
 /build
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 *.js.map
 *.d.ts.map
+.watchmanconfig
 
 # Logs
 logs/

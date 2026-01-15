@@ -1,32 +1,23 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CacheModule } from '@nestjs/cache-manager';
-import { getTypeOrmConfig } from '../infra/database/typeorm/config/type.config';
-import { getRedisConfig } from '../infra/database/typeorm/config/redis.config';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { DatabaseModule } from "./infrastructure/database/database.module";
+import { CacheModule } from "./infrastructure/cache/cache.module";
+import { AuthModule } from "./modules/auth.module";
 
 @Module({
   imports: [
-    // 1. ConfigModule - Carrega .env (SEMPRE PRIMEIRO)
+    // ConfigModule - Carrega .env (SEMPRE PRIMEIRO)
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: ".env",
     }),
 
-    // 2. TypeORM - PostgreSQL
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getTypeOrmConfig,
-    }),
+    // Módulos de Infraestrutura
+    DatabaseModule,
+    CacheModule,
 
-    // 3. CacheModule - Redis
-    CacheModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getRedisConfig,
-      isGlobal: true,
-    }),
+    // Módulos de Negócio
+    AuthModule,
   ],
   controllers: [],
   providers: [],
