@@ -1,0 +1,101 @@
+name: API MarketPlace CI/CD
+
+on:
+  pull_request:
+    branches: ["main", "develop"]
+  push:
+    branches: ["main", "develop"]
+
+env:
+  NODE_VERSION: "20.x"
+  PNPM_VERSION: "8"
+
+jobs:
+  build:
+    name: 🏗️ Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎨 Run ESLint
+        run: pnpm run lint
+
+      - name: 🧪 Run tests
+        run: pnpm run test
+
+      - name: 🏗️ Build application
+        run: pnpm run build
+
+      - name: ✅ Verify build
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ Build failed - dist folder not found"
+            exit 1
+          fi
+          echo "✅ Build output verified"
+      - name: 📦 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+  e2e-tests:
+    name: 🧪 E2E Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: 📚 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🚀 Start application
+        run: pnpm run start &
+
+      - name: 🧪 Run E2E tests
+        run: pnpm run test:e2e
+        e2e-tests:
+  name: 🧪 E2E Tests
+  runs-on: ubuntu-latest
+  needs: build  # Espera build terminar
+
+  steps:
+    # ... setup ...
+    
+    - name: 🚀 Start application
+      run: pnpm run start:prod &  # Inicia app em background
+      
+    - name: ⏳ Wait for app
+      run: sleep 10
+      
+    - name: 🧪 Run E2E tests
+      run: pnpm run test:e2e  # Testa app rodando
