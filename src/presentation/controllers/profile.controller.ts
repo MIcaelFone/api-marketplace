@@ -1,10 +1,13 @@
-import { Controller, Get, UseGuards, Request } from "@nestjs/common";
+import { Controller, Get, UseGuards, Request, Inject } from "@nestjs/common";
 import { JwtAuthGuard } from "../../infrastructure/auth/jwt-auth.guard";
-import { SessionService } from "../../../application/services/session.service";
+import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
 
 @Controller("profile")
 export class ProfileController {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(
+    @Inject("ISessionRepository")
+    private readonly sessionRepository: ISessionRepository,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -12,7 +15,7 @@ export class ProfileController {
     const userId = req.user.userId;
 
     // Buscar dados da sessão no cache (mais rápido que banco)
-    const session = await this.sessionService.getSession(userId);
+    const session = await this.sessionRepository.getSession(userId);
 
     if (!session) {
       return { message: "Session expired", user: req.user };
@@ -30,7 +33,7 @@ export class ProfileController {
     const userId = req.user.userId;
 
     // Atualiza o TTL da sessão (mantém usuário conectado)
-    await this.sessionService.refreshSession(userId);
+    await this.sessionRepository.refreshSession(userId);
 
     return { message: "Session refreshed" };
   }
