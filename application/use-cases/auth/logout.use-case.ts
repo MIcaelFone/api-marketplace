@@ -1,16 +1,22 @@
-import { Injectable } from "@nestjs/common";
-import { SessionService } from "../../services/session.service";
+import { Injectable, Inject } from "@nestjs/common";
+import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
+import { ITokenRepository } from "../../../domain/repositories/token.repository.interface";
 
 @Injectable()
 export class LogoutUseCase {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(
+    @Inject("ISessionRepository")
+    private readonly sessionRepository: ISessionRepository,
+    @Inject("ITokenRepository")
+    private readonly tokenRepository: ITokenRepository,
+  ) {}
 
   async execute(userId: number, token: string): Promise<{ message: string }> {
     // Remove sessão do usuário
-    await this.sessionService.deleteSession(userId);
+    await this.sessionRepository.deleteSession(userId);
 
     // Invalida o token
-    await this.sessionService.invalidateToken(token);
+    await this.tokenRepository.invalidateToken(token);
 
     return { message: "Logout successful" };
   }
