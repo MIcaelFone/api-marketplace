@@ -5,9 +5,12 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { LoginUseCase } from "../../application/use-cases/auth/login.use-case";
 import { LogoutUseCase } from "../../application/use-cases/auth/logout.use-case";
 import { AuthController } from "../presentation/controllers/auth.controller";
+import { ProfileController } from "../presentation/controllers/profile.controller";
 import { JwtStrategy } from "../infrastructure/auth/jwt.strategy";
 import { JwtAuthGuard } from "../infrastructure/auth/jwt-auth.guard";
-import { SessionService } from "../../application/services/session.service";
+import { SessionService } from "../../infra/services/session.service";
+import { TokenService } from "../../infra/services/token.service";
+import { JwtService as CustomJwtService } from "../../infra/services/jwt.service";
 import { UserModule } from "./user.module";
 
 @Module({
@@ -25,13 +28,24 @@ import { UserModule } from "./user.module";
     }),
     UserModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, ProfileController],
   providers: [
     LoginUseCase,
     LogoutUseCase,
     JwtStrategy,
     JwtAuthGuard,
-    SessionService,
+    {
+      provide: "ISessionRepository",
+      useClass: SessionService,
+    },
+    {
+      provide: "ITokenRepository",
+      useClass: TokenService,
+    },
+    {
+      provide: "IJwtRepository",
+      useClass: CustomJwtService,
+    },
   ],
   exports: [JwtModule, JwtAuthGuard],
 })
