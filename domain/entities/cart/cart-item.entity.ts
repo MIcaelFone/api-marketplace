@@ -34,45 +34,55 @@ export class CartItemEntity {
     createdAt: Date,
     updatedAt: Date,
   ): CartItemEntity {
-    return new CartItemEntity(id, productId, quantity, priceAtTime, createdAt, updatedAt);
+    return new CartItemEntity(
+      id,
+      productId,
+      quantity,
+      priceAtTime,
+      createdAt,
+      updatedAt,
+    );
   }
 
   public validate(): void {
-    if (!Number.isInteger(this.id) && this.id < 0) {
-      throw new Error('ID must be an integer and not negative.');
+    if (this.id !== null && (!Number.isInteger(this.id) || this.id < 0)) {
+      throw new Error("ID must be an integer and not negative.");
     }
     if (this.quantity <= 0) {
-      throw new Error('Quantity must be greater than zero.');
+      throw new Error("Quantity must be greater than zero.");
     }
     if (this.priceAtTime < 0) {
-      throw new Error('Price at time cannot be negative.');
+      throw new Error("Price at time cannot be negative.");
     }
     if (!Number.isInteger(this.quantity)) {
-      throw new Error('Quantity must be an integer.');
+      throw new Error("Quantity must be an integer.");
     }
     if (!Number.isInteger(this.productId) || this.productId <= 0) {
-      throw new Error('Product ID must be a positive integer.');
+      throw new Error("Product ID must be a positive integer.");
     }
     if (!(this.createdAt instanceof Date) || isNaN(this.createdAt.getTime())) {
-      throw new Error('Created at must be a valid Date.');
+      throw new Error("Created at must be a valid Date.");
     }
     if (!(this.updatedAt instanceof Date) || isNaN(this.updatedAt.getTime())) {
-      throw new Error('Updated at must be a valid Date.');
+      throw new Error("Updated at must be a valid Date.");
     }
-    if (!Number.isInteger(this.cartId || this.cartId <= 0)) {
-      throw new Error('Cart ID must be a positive integer.');
+    if (
+      this.cartId !== undefined &&
+      (!Number.isInteger(this.cartId) || this.cartId <= 0)
+    ) {
+      throw new Error("Cart ID must be a positive integer.");
     }
   }
   incrementQuantity(amount: number): void {
     if (amount <= 0 || !Number.isInteger(amount)) {
-      throw new Error('Increment amount must be a positive integer.');
+      throw new Error("Increment amount must be a positive integer.");
     }
     this.quantity += amount;
     this.updatedAt = new Date();
   }
   updateQuantity(newQuantity: number): void {
     if (newQuantity <= 0 || !Number.isInteger(newQuantity)) {
-      throw new Error('New quantity must be a positive integer.');
+      throw new Error("New quantity must be a positive integer.");
     }
     this.quantity = newQuantity;
     this.updatedAt = new Date();
@@ -96,6 +106,6 @@ export class CartItemEntity {
     return this.updatedAt;
   }
   getCartID(): number | null {
-    return this.cartId;
+    return this.cartId || null;
   }
 }

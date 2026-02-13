@@ -1,5 +1,5 @@
 import { IsEmail, IsInt, IsNotEmpty, IsString, MinLength } from 'class-validator';
-export class RegisterDto {
+export class UserDto {
     @IsString()
     @IsNotEmpty({ message: 'Name is required' })
     @MinLength(3,{ message: 'Name must be at least 3 characters long' })
@@ -18,10 +18,10 @@ export class RegisterDto {
     @IsNotEmpty({ message: 'User type ID is required' })
     userTypeId: number;
 }
-export class RegisterResponseDto {
-    id: number;
-    nome: string;
-    email: string;
-    phoneNumber: string;
-    userTypeId: number;
+export class UserResponseDto {
+  id: number;
+  nome: string;
+  email: string;
+  phoneNumber: string;
+  userTypeId: number;
 }

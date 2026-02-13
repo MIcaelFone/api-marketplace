@@ -8,10 +8,12 @@ import { AuthController } from "../presentation/controllers/auth.controller";
 import { ProfileController } from "../presentation/controllers/profile.controller";
 import { JwtStrategy } from "../infrastructure/auth/jwt.strategy";
 import { JwtAuthGuard } from "../infrastructure/auth/jwt-auth.guard";
+import { RolesGuard } from "../infrastructure/auth/roles.guard";
 import { SessionService } from "../../infra/services/session.service";
 import { TokenService } from "../../infra/services/token.service";
 import { JwtService as CustomJwtService } from "../../infra/services/jwt.service";
-import { UserModule } from "./user.module";
+import { RoleService } from "../../infra/services/role.service";
+import { UserModule } from "../user.module";
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { UserModule } from "./user.module";
     LogoutUseCase,
     JwtStrategy,
     JwtAuthGuard,
+    RolesGuard,
     {
       provide: "ISessionRepository",
       useClass: SessionService,
@@ -46,7 +49,11 @@ import { UserModule } from "./user.module";
       provide: "IJwtRepository",
       useClass: CustomJwtService,
     },
+    {
+      provide: "IRoleRepository",
+      useClass: RoleService,
+    },
   ],
-  exports: [JwtModule, JwtAuthGuard],
+  exports: [JwtModule, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

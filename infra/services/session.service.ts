@@ -26,7 +26,7 @@ export class SessionService implements ISessionRepository {
    */
   async getSession(userId: number): Promise<SessionData | null> {
     const key = this.getSessionKey(userId);
-    return await this.cacheManager.get<SessionData>(key);
+    return (await this.cacheManager.get<SessionData>(key)) ?? null;
   }
 
   /**

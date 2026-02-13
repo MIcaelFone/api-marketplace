@@ -1,7 +1,9 @@
 import { Controller, Get, UseGuards, Request, Inject } from "@nestjs/common";
 import { JwtAuthGuard } from "../../infrastructure/auth/jwt-auth.guard";
 import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
-
+interface AuthenticatedRequest extends Request {
+  user: { userId: string };
+}
 @Controller("profile")
 export class ProfileController {
   constructor(
@@ -11,11 +13,9 @@ export class ProfileController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getProfile(@Request() req) {
+  async getProfile(@Request() req: AuthenticatedRequest) {
     const userId = req.user.userId;
-
-    // Buscar dados da sessão no cache (mais rápido que banco)
-    const session = await this.sessionRepository.getSession(userId);
+    const session = await this.sessionRepository.getSession(Number(userId));
 
     if (!session) {
       return { message: "Session expired", user: req.user };
@@ -29,12 +29,11 @@ export class ProfileController {
 
   @UseGuards(JwtAuthGuard)
   @Get("refresh")
-  async refreshSession(@Request() req) {
+  async refreshSession(
+    @Request() req: AuthenticatedRequest,
+  ): Promise<{ message: string }> {
     const userId = req.user.userId;
-
-    // Atualiza o TTL da sessão (mantém usuário conectado)
-    await this.sessionRepository.refreshSession(userId);
-
+    await this.sessionRepository.refreshSession(Number(userId));
     return { message: "Session refreshed" };
   }
 }
