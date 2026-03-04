@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards, Request, Inject } from "@nestjs/common";
 import { JwtAuthGuard } from "../../infrastructure/auth/jwt-auth.guard";
-import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
+import { ISessionRepository } from "../../../domain/interfaces/session.repository.interface";
 interface AuthenticatedRequest extends Request {
   user: { userId: string };
 }
@@ -14,7 +14,7 @@ export class ProfileController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getProfile(@Request() req: AuthenticatedRequest) {
-    const userId = req.user.userId;
+    const userId = req.user.userId                                                                                                                                                                                                                                                                                                                                                                                                                              
     const session = await this.sessionRepository.getSession(Number(userId));
 
     if (!session) {

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
-import { ITokenRepository } from "../../../domain/repositories/token.repository.interface";
+import { ISessionRepository } from "../../../domain/interfaces/session.repository.interface";
+import { ITokenRepository } from "../../../domain/interfaces/token.repository.interface";
 
 @Injectable()
 export class LogoutUseCase {
@@ -12,10 +12,10 @@ export class LogoutUseCase {
   ) {}
 
   async execute(userId: number, token: string): Promise<{ message: string }> {
-    // Remove sessão do usuário
+   
     await this.sessionRepository.deleteSession(userId);
 
-    // Invalida o token
+     
     await this.tokenRepository.invalidateToken(token);
 
     return { message: "Logout successful" };

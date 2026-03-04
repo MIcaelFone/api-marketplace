@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException, Inject } from "@nestjs/common";
 import * as bcrypt from "bcryptjs";
 import { LoginDto, LoginResponseDto } from "../../DTO/login.dto";
-import { IUserRepository } from "../../../domain/repositories/user.repository.interface";
-import { ISessionRepository } from "../../../domain/repositories/session.repository.interface";
-import { ITokenRepository } from "../../../domain/repositories/token.repository.interface";
-import { IJwtRepository } from "../../../domain/repositories/jwt.repository.interface";
-import { IRoleRepository } from "../../../domain/repositories/role.repository.interface";
+import { IUserRepository } from "../../../domain/interfaces/user.repository.interface";
+import { ISessionRepository } from "../../../domain/interfaces/session.repository.interface";
+import { ITokenRepository } from "../../../domain/interfaces/token.repository.interface";
+import { IJwtRepository } from "../../../domain/interfaces/jwt.repository.interface";
+import { IRoleRepository } from "../../../domain/interfaces/role.repository.interface";
 import { SessionData } from "../../../domain/entities/session/session-data";
 import { TokenData } from "../../../domain/entities/token/token-data";
 
@@ -37,7 +37,7 @@ export class LoginUseCase {
       throw new UnauthorizedException("Invalid credentials");
     }
 
-    // Determinar role baseado no userTypeId
+ 
     const role = this.roleRepository.getRoleFromUserType(user.getUserTypeId());
 
     const userId = user.getId();
@@ -52,19 +52,17 @@ export class LoginUseCase {
     };
     const token = this.jwtRepository.sign(payload);
 
-    // Salvar sessão no Redis usando SessionRepository
+     
     const sessionData = new SessionData(
       userId,
-      user.getEmail().getValue(), // Converte Email VO para string
+      user.getEmail().getValue(),  
       role,
       user.getName(),
-      user.getPhoneNumber().getValue(), // Converte Phone VO para string
+      user.getPhoneNumber().getValue(),  
       user.getUserTypeId(),
       new Date().toISOString(),
     );
     await this.sessionRepository.saveSession(userId, sessionData);
-
-    // Salvar token para controle de sessão (reutiliza userId validado)
     const tokenData = new TokenData(userId, true);
     await this.tokenRepository.saveToken(token, tokenData);
 

@@ -25,7 +25,8 @@ export class AuthController {
   async logout(
     @Request() req: AuthenticatedRequest,
   ): Promise<{ message: string }> {
-    const token =req.headers.get("authorization")?.replace("Bearer ", "") ?? "";
+    const authHeader = (req.headers as any).authorization || "";
+    const token = authHeader.replace("Bearer ", "");
     return this.logoutUseCase.execute(Number(req.user.userId), token);
   }
 }

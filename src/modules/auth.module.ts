@@ -13,7 +13,7 @@ import { SessionService } from "../../infra/services/session.service";
 import { TokenService } from "../../infra/services/token.service";
 import { JwtService as CustomJwtService } from "../../infra/services/jwt.service";
 import { RoleService } from "../../infra/services/role.service";
-import { UserModule } from "../user.module";
+import { UserModule } from "./user.module";
 
 @Module({
   imports: [

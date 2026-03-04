@@ -28,6 +28,12 @@
     "disableReferencedProjectLoad": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
     "types": ["node", "jest"],
+    "maxNodeModuleJsDepth": 0,
+    "disableSourceOfProjectReferenceRedirect": true,
+    "disableSolutionSearching": true,
+    "disableReferencedProjectLoad": true,
+    "assumeChangesOnlyAffectDirectDependencies": true,
+    "types": ["node", "jest"],
     "paths": {
       "@domain/*": ["domain/*"],
       "@application/*": ["application/*"],
