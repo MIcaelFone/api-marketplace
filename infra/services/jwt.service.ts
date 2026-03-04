@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService as NestJwtService } from "@nestjs/jwt";
-import { IJwtRepository } from "../../domain/repositories/jwt.repository.interface";
+import { IJwtRepository } from "../../domain/interfaces/jwt.repository.interface";
 
 @Injectable()
 export class JwtService implements IJwtRepository {

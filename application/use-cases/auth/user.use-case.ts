@@ -1,11 +1,6 @@
 import { UserDto, UserResponseDto } from "@application/DTO/user.dto";
 import { IUserRepository } from "../../../domain/interfaces/user.repository.interface";
-import {
-  Injectable,
-  Inject,
-  ConflictException,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, Inject, ConflictException } from "@nestjs/common";
 import { UserEntity } from "@domain/entities/user/user.entity";
 import { Email } from "@domain/valueObjects/email.vo";
 import { Phone } from "@domain/valueObjects/phone.vo";

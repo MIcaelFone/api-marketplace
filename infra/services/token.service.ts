@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Cache } from "cache-manager";
-import { ITokenRepository } from "../../domain/repositories/token.repository.interface";
+import { ITokenRepository } from "../../domain/interfaces/token.repository.interface";
 import { TokenData } from "../../domain/entities/token/token-data";
 
 @Injectable()

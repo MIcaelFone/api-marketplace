@@ -8,8 +8,8 @@ export class LoginDto {
   password: string;
 }
 export class LoginResponseDto {
-  acess_token: string;
-  user: {
+  access_token: string;
+  user?: {
     id: number;
     name: string;
     email: string;
@@ -25,9 +25,9 @@ export class LoginResponseDto {
       email: string;
       phoneNumber: string;
       userTypeId: number;
-    }
+    },
   ) {
-    this.acess_token = token;
+    this.access_token = token;
     this.user = user;
   }
 }

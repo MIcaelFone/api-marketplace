@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Cache } from "cache-manager";
-import { ISessionRepository } from "../../domain/repositories/session.repository.interface";
+import { ISessionRepository } from "../../domain/interfaces/session.repository.interface";
 import { SessionData } from "../../domain/entities/session/session-data";
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { IRoleRepository } from "../../domain/repositories/role.repository.interface";
+import { IRoleRepository } from "../../domain/interfaces/role.repository.interface";
 import { UserRoles } from "../../domain/enum/user-roles.enum";
-import { IUserRepository } from "../../domain/repositories/user.repository.interface";
+import { IUserRepository } from "../../domain/interfaces/user.repository.interface";
 
 @Injectable()
 export class RoleService implements IRoleRepository {
@@ -44,8 +44,7 @@ export class RoleService implements IRoleRepository {
     );
     if (roleExists) {
       throw new Error("Role already exists");
-    }
-    else if(!roleExists){
+    } else if (!roleExists) {
       this.createRole(roleName); // Gera um novo userTypeId
     }
     if (!roleExists) {
@@ -54,7 +53,6 @@ export class RoleService implements IRoleRepository {
   }
 
   async getRoleByName(roleName: string): Promise<string | null> {
-    
     for (const [, role] of this.userTypeToRoleMap) {
       if (role === roleName) {
         return roleName;

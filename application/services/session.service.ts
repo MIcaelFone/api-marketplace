@@ -24,7 +24,7 @@ export class SessionService {
 
   constructor(
     @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache
+    private readonly cacheManager: Cache,
   ) {}
 
   /**
@@ -40,7 +40,8 @@ export class SessionService {
    */
   async getSession(userId: number): Promise<SessionData | null> {
     const key = this.getSessionKey(userId);
-    return await this.cacheManager.get<SessionData>(key);
+    const session = await this.cacheManager.get<SessionData>(key);
+    return session || null;
   }
 
   /**
