@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
-} from 'typeorm';
-import { CartTypeOrmEntity } from './cart.typeorm-entity';
-import { ProductTypeOrmEntity } from '../product/product.typeorm-entity';
-@Entity('cart_items')
+} from "typeorm";
+import { CartTypeOrmEntity } from "./cart.typeorm-entity";
+import { ProductTypeOrmEntity } from "../product/product.typeorm-entity";
+@Entity("cart_items")
 export class CartItemTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,20 +18,20 @@ export class CartItemTypeOrmEntity {
   cartId: number;
 
   @ManyToOne(() => CartTypeOrmEntity, (cart) => cart.id)
-  @JoinColumn({ name: 'cartId' })
+  @JoinColumn({ name: "cartId" })
   cart: CartTypeOrmEntity;
 
   @Column()
   productId: number;
 
   @ManyToOne(() => ProductTypeOrmEntity, (product) => product.id)
-  @JoinColumn({ name: 'productId' })
+  @JoinColumn({ name: "productId" })
   product: ProductTypeOrmEntity;
 
-  @Column({ nullable: false, type: 'int' })
+  @Column({ nullable: false, type: "int" })
   quantity: number;
 
-  @Column({ nullable: false, type: 'decimal', precision: 10, scale: 2 })
+  @Column({ nullable: false, type: "decimal", precision: 10, scale: 2 })
   priceAtTime: number;
 
   @CreateDateColumn()
