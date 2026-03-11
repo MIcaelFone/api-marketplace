@@ -2,11 +2,11 @@ export class Email {
   private static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   private static readonly MAX_LENGTH = 254;
   private static readonly emailServiceProviders = [
-    'gmail.com',
-    'yahoo.com',
-    'outlook.com',
-    'hotmail.com',
-    'icloud.com',
+    "gmail.com",
+    "yahoo.com",
+    "outlook.com",
+    "hotmail.com",
+    "icloud.com",
   ];
   private static allowedcostumDomains: boolean = false;
   private constructor(private readonly email: string) {
@@ -14,14 +14,14 @@ export class Email {
   }
 
   private validate(): void {
-    if (!this.email || this.email.trim() === '') {
-      throw new Error('Email is required');
+    if (!this.email || this.email.trim() === "") {
+      throw new Error("Email is required");
     }
     if (!Email.EMAIL_REGEX.test(this.email)) {
-      throw new Error('Email format is invalid');
+      throw new Error("Email format is invalid");
     }
     if (this.email.length > Email.MAX_LENGTH) {
-      throw new Error('Email must not exceed 254 characters');
+      throw new Error("Email must not exceed 254 characters");
     }
     if (!Email.allowedcostumDomains) {
       const domain = this.getDomain();
@@ -44,7 +44,7 @@ export class Email {
   }
   static addEmailServiceProvider(provider: string): void {
     if (this.emailServiceProviders.includes(provider)) {
-      throw new Error('Email service provider already exists');
+      throw new Error("Email service provider already exists");
     }
     this.emailServiceProviders.push(provider);
   }
@@ -52,7 +52,7 @@ export class Email {
     return this.email;
   }
   getDomain(): string {
-    return this.email.split('@')[1];
+    return this.email.split("@")[1];
   }
   equals(other: Email): boolean {
     return this.email === other.getValue();
