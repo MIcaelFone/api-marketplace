@@ -38,26 +38,22 @@ export class RoleService implements IRoleRepository {
   }
 
   // Métodos da interface IRoleRepository que ainda não estão implementados
-  async createRole(roleName: string): Promise<void> {
+  createRole(roleName: string): Promise<void> {
     const roleExists = Array.from(this.userTypeToRoleMap.values()).includes(
       roleName,
     );
     if (roleExists) {
-      throw new Error("Role already exists");
-    } else if (!roleExists) {
-      this.createRole(roleName); // Gera um novo userTypeId
+      return Promise.reject(new Error("Role already exists"));
     }
-    if (!roleExists) {
-      throw new Error("Method not implemented - createRole");
-    }
+    return Promise.reject(new Error("Method not implemented - createRole"));
   }
 
-  async getRoleByName(roleName: string): Promise<string | null> {
+  getRoleByName(roleName: string): Promise<string | null> {
     for (const [, role] of this.userTypeToRoleMap) {
       if (role === roleName) {
-        return roleName;
+        return Promise.resolve(roleName);
       }
     }
-    return null;
+    return Promise.resolve(null);
   }
 }
