@@ -4,12 +4,12 @@ export class CPF {
   }
 
   private validate(): void {
-    const cleaned = this.value.replace(/\D/g, '');
+    const cleaned = this.value.replace(/\D/g, "");
     if (cleaned.length !== 11 || /^(\d)\1+$/.test(cleaned)) {
-      throw new Error('CPF inválido');
+      throw new Error("CPF inválido");
     }
     if (!this.isValidCPF(cleaned)) {
-      throw new Error('CPF inválido');
+      throw new Error("CPF inválido");
     }
   }
   private isValidCPF(cpf: string): boolean {
@@ -32,7 +32,7 @@ export class CPF {
     return secondDigit === parseInt(cpf.charAt(10));
   }
   static create(cpf: string): CPF {
-    const cleaned = cpf.replace(/\D/g, '');
+    const cleaned = cpf.replace(/\D/g, "");
     return new CPF(cleaned);
   }
   static restore(cpf: string): CPF {
