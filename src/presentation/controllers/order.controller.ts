@@ -10,7 +10,7 @@ export class OrderController {
   // Buyers podem criar pedidos
   @Post()
   @Roles(UserRoles.BUYER)
-  async createOrder(@Body() createOrderDto: any) {
+  createOrder(@Body() createOrderDto: unknown) {
     return {
       message: "Pedido criado com sucesso",
       data: createOrderDto,
@@ -20,7 +20,7 @@ export class OrderController {
   // Buyers podem ver seus próprios pedidos
   @Get("my-orders")
   @Roles(UserRoles.BUYER)
-  async getMyOrders() {
+  getMyOrders() {
     return {
       message: "Meus pedidos",
       data: [],
@@ -30,7 +30,7 @@ export class OrderController {
   // Sellers podem ver pedidos dos seus produtos
   @Get("sales")
   @Roles(UserRoles.SELLER)
-  async getMySales() {
+  getMySales() {
     return {
       message: "Minhas vendas",
       data: [],
@@ -40,7 +40,7 @@ export class OrderController {
   // Admins podem ver todos os pedidos
   @Get()
   @Roles(UserRoles.ADMIN)
-  async getAllOrders() {
+  getAllOrders() {
     return {
       message: "Todos os pedidos",
       data: [],
@@ -50,7 +50,7 @@ export class OrderController {
   // Admins podem ver detalhes de qualquer pedido
   @Get(":id")
   @Roles(UserRoles.ADMIN)
-  async getOrder(@Param("id") id: string) {
+  getOrder(@Param("id") id: string) {
     return {
       message: `Detalhes do pedido ${id}`,
       data: {},
