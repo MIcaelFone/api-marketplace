@@ -9,27 +9,27 @@ export class Phone {
 
   private validate(): void {
     if (!this.countryCode.match(/^\+?\d{1,3}$/)) {
-      throw new Error('Código de país inválido');
+      throw new Error("Código de país inválido");
     }
 
     if (!this.areaCode.match(/^\d{2}$/)) {
-      throw new Error('DDD inválido. Deve conter 2 dígitos');
+      throw new Error("DDD inválido. Deve conter 2 dígitos");
     }
 
     if (!this.number.match(/^\d{8,9}$/)) {
-      throw new Error('Número inválido. Deve conter 8 ou 9 dígitos');
+      throw new Error("Número inválido. Deve conter 8 ou 9 dígitos");
     }
   }
 
   static create(phone: string): Phone {
-    const cleaned = phone.replace(/\D/g, '');
+    const cleaned = phone.replace(/\D/g, "");
 
-    let countryCode = '+55';
+    let countryCode = "+55";
     let areaCode: string;
     let number: string;
 
-    if (cleaned.length === 13 && cleaned.startsWith('55')) {
-      countryCode = '+55';
+    if (cleaned.length === 13 && cleaned.startsWith("55")) {
+      countryCode = "+55";
       areaCode = cleaned.substring(2, 4);
       number = cleaned.substring(4);
     } else if (cleaned.length === 11) {
@@ -39,13 +39,19 @@ export class Phone {
       areaCode = cleaned.substring(0, 2);
       number = cleaned.substring(2);
     } else {
-      throw new Error('Formato de telefone inválido. Use (XX) XXXXX-XXXX ou (XX) XXXX-XXXX');
+      throw new Error(
+        "Formato de telefone inválido. Use (XX) XXXXX-XXXX ou (XX) XXXX-XXXX",
+      );
     }
 
     return new Phone(countryCode, areaCode, number);
   }
 
-  static createWithParts(countryCode: string, areaCode: string, number: string): Phone {
+  static createWithParts(
+    countryCode: string,
+    areaCode: string,
+    number: string,
+  ): Phone {
     return new Phone(countryCode, areaCode, number);
   }
 
