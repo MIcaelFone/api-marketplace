@@ -37,7 +37,6 @@ export class LoginUseCase {
       throw new UnauthorizedException("Invalid credentials");
     }
 
- 
     const role = this.roleRepository.getRoleFromUserType(user.getUserTypeId());
 
     const userId = user.getId();
@@ -52,13 +51,12 @@ export class LoginUseCase {
     };
     const token = this.jwtRepository.sign(payload);
 
-     
     const sessionData = new SessionData(
       userId,
-      user.getEmail().getValue(),  
+      user.getEmail().getValue(),
       role,
       user.getName(),
-      user.getPhoneNumber().getValue(),  
+      user.getPhoneNumber().getValue(),
       user.getUserTypeId(),
       new Date().toISOString(),
     );

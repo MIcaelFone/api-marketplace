@@ -12,10 +12,8 @@ export class LogoutUseCase {
   ) {}
 
   async execute(userId: number, token: string): Promise<{ message: string }> {
-   
     await this.sessionRepository.deleteSession(userId);
 
-     
     await this.tokenRepository.invalidateToken(token);
 
     return { message: "Logout successful" };
