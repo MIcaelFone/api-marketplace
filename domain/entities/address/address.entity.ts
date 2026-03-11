@@ -1,4 +1,4 @@
-import { CEP } from '../../valueObjects/cep.vo';
+import { CEP } from "../../valueObjects/cep.vo";
 export class AddressEntity {
   private constructor(
     private readonly id: number | null,
@@ -15,46 +15,46 @@ export class AddressEntity {
   }
   public validate(): void {
     if (this.id !== null && !Number.isInteger(this.id)) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
     if (!Number.isInteger(this.userId) || this.userId <= 0) {
-      throw new Error('User ID must be a positive integer');
+      throw new Error("User ID must be a positive integer");
     }
-    if (!this.street || this.street.trim() === '') {
-      throw new Error('Street is required');
+    if (!this.street || this.street.trim() === "") {
+      throw new Error("Street is required");
     }
     if (this.street.length < 5) {
-      throw new Error('Street must be at least 5 characters long');
+      throw new Error("Street must be at least 5 characters long");
     }
-    if (!this.city || this.city.trim() === '') {
-      throw new Error('City is required');
+    if (!this.city || this.city.trim() === "") {
+      throw new Error("City is required");
     }
     if (this.city.length < 2) {
-      throw new Error('City must be at least 2 characters long');
+      throw new Error("City must be at least 2 characters long");
     }
-    if (!this.state || this.state.trim() === '') {
-      throw new Error('State is required');
+    if (!this.state || this.state.trim() === "") {
+      throw new Error("State is required");
     }
     if (this.state.length < 2) {
-      throw new Error('State must be at least 2 characters long');
+      throw new Error("State must be at least 2 characters long");
     }
-    if (this.CEP.getValue() === '') {
-      throw new Error('CEP is required');
+    if (this.CEP.getValue() === "") {
+      throw new Error("CEP is required");
     }
-    if (!this.country || this.country.trim() === '') {
-      throw new Error('Country is required');
+    if (!this.country || this.country.trim() === "") {
+      throw new Error("Country is required");
     }
     if (this.country.length < 2) {
-      throw new Error('Country must be at least 2 characters long');
+      throw new Error("Country must be at least 2 characters long");
     }
     if (!(this.createdAt instanceof Date) || isNaN(this.createdAt.getTime())) {
-      throw new Error('Created at must be a valid Date');
+      throw new Error("Created at must be a valid Date");
     }
     if (
       this.updatedAt !== null &&
       (!(this.updatedAt instanceof Date) || isNaN(this.updatedAt.getTime()))
     ) {
-      throw new Error('Updated at must be a valid Date or null');
+      throw new Error("Updated at must be a valid Date or null");
     }
   }
   static create(
@@ -88,60 +88,70 @@ export class AddressEntity {
     updatedAt: Date,
     CEP: CEP,
   ): AddressEntity {
-    return new AddressEntity(id, userId, street, city, state, country, CEP, createdAt, updatedAt);
+    return new AddressEntity(
+      id,
+      userId,
+      street,
+      city,
+      state,
+      country,
+      CEP,
+      createdAt,
+      updatedAt,
+    );
   }
   updateStreet(newStreet: string): void {
-    if (!newStreet || newStreet.trim() === '') {
-      throw new Error('Street is required');
+    if (!newStreet || newStreet.trim() === "") {
+      throw new Error("Street is required");
     }
     if (newStreet.length < 5) {
-      throw new Error('Street must be at least 5 characters long');
+      throw new Error("Street must be at least 5 characters long");
     }
     this.street = newStreet;
     this.updatedAt = new Date();
   }
   updateCity(newCity: string): void {
-    if (!newCity || newCity.trim() === '') {
-      throw new Error('City is required');
+    if (!newCity || newCity.trim() === "") {
+      throw new Error("City is required");
     }
     if (newCity.length < 2) {
-      throw new Error('City must be at least 2 characters long');
+      throw new Error("City must be at least 2 characters long");
     }
     this.city = newCity;
     this.updatedAt = new Date();
   }
   updateState(newState: string): void {
-    if (!newState || newState.trim() === '') {
-      throw new Error('State is required');
+    if (!newState || newState.trim() === "") {
+      throw new Error("State is required");
     }
     if (newState.length < 2) {
-      throw new Error('State must be at least 2 characters long');
+      throw new Error("State must be at least 2 characters long");
     }
     this.state = newState;
     this.updatedAt = new Date();
   }
   updateCountry(newCountry: string): void {
-    if (!newCountry || newCountry.trim() === '') {
-      throw new Error('Country is required');
+    if (!newCountry || newCountry.trim() === "") {
+      throw new Error("Country is required");
     }
     if (newCountry.length < 2) {
-      throw new Error('Country must be at least 2 characters long');
+      throw new Error("Country must be at least 2 characters long");
     }
     if (this.country === newCountry) {
-      throw new Error('New country must be different from the current country');
+      throw new Error("New country must be different from the current country");
     }
     this.country = newCountry;
     this.updatedAt = new Date();
   }
   updateCEP(newCEP: CEP): void {
-    if (newCEP.getValue() === '') {
-      throw new Error('CEP is required');
+    if (newCEP.getValue() === "") {
+      throw new Error("CEP is required");
     }
     if (newCEP.getValue() === null) {
-      throw new Error('CEP is invalid');
+      throw new Error("CEP is invalid");
     }
     if (this.CEP.equals(newCEP)) {
-      throw new Error('New CEP must be different from the current CEP');
+      throw new Error("New CEP must be different from the current CEP");
     }
     this.CEP = newCEP;
     this.updatedAt = new Date();
