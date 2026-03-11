@@ -1,4 +1,4 @@
-import { CartItemEntity } from './cart-item.entity';
+import { CartItemEntity } from "./cart-item.entity";
 export class CartEntity {
   private constructor(
     private readonly id: number | null,
@@ -11,19 +11,19 @@ export class CartEntity {
   }
   public validate(): void {
     if (!Number.isInteger(this.id) && this.id !== null) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
     if (this.userId <= 0 || !Number.isInteger(this.userId)) {
-      throw new Error('User ID must be a positive integer');
+      throw new Error("User ID must be a positive integer");
     }
     if (!Array.isArray(this.itens)) {
-      throw new Error('Itens must be an array of CartItemEntity');
+      throw new Error("Itens must be an array of CartItemEntity");
     }
     if (this.createdAt === null || !(this.createdAt instanceof Date)) {
-      throw new Error('CreatedAt must be a valid Date');
+      throw new Error("CreatedAt must be a valid Date");
     }
     if (this.updatedAt !== null && !(this.updatedAt instanceof Date)) {
-      throw new Error('UpdatedAt must be a valid Date or null');
+      throw new Error("UpdatedAt must be a valid Date or null");
     }
   }
   static create(userId: number, itens: CartItemEntity[]): CartEntity {
