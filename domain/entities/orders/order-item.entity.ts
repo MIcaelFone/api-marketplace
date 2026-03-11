@@ -14,25 +14,25 @@ export class OrderItemEntity {
   }
   private validate(): void {
     if (this.id !== null && !Number.isInteger(this.id)) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
     if (!Number.isInteger(this.productId) || this.productId <= 0) {
-      throw new Error('Product ID must be a positive integer');
+      throw new Error("Product ID must be a positive integer");
     }
     if (!Number.isInteger(this.orderId) || this.orderId <= 0) {
-      throw new Error('Order ID must be a positive integer');
+      throw new Error("Order ID must be a positive integer");
     }
     if (this.quantity <= 0) {
-      throw new Error('Quantity must be greater than zero');
+      throw new Error("Quantity must be greater than zero");
     }
     if (this.price < 0) {
-      throw new Error('Price must be greater than or equal to zero');
+      throw new Error("Price must be greater than or equal to zero");
     }
-    if (!this.productSkuAtTime || this.productSkuAtTime.trim() === '') {
-      throw new Error('Product SKU at time is required');
+    if (!this.productSkuAtTime || this.productSkuAtTime.trim() === "") {
+      throw new Error("Product SKU at time is required");
     }
-    if (!this.productNameAtTime || this.productNameAtTime.trim() === '') {
-      throw new Error('Product name at time is required');
+    if (!this.productNameAtTime || this.productNameAtTime.trim() === "") {
+      throw new Error("Product name at time is required");
     }
   }
   static create(
