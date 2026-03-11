@@ -4,8 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-} from 'typeorm';
-@Entity('user_types')
+} from "typeorm";
+@Entity("user_types")
 export class UserTypeTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;

@@ -6,10 +6,10 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { UserTypeTypeOrmEntity } from '../user/userType.typeorm-entity';
+} from "typeorm";
+import { UserTypeTypeOrmEntity } from "../user/userType.typeorm-entity";
 
-@Entity('users')
+@Entity("users")
 export class UserTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,11 +29,11 @@ export class UserTypeOrmEntity {
   @Column({ nullable: false })
   isactive: boolean;
 
-  @Column({ name: 'userTypeID', nullable: false })
+  @Column({ name: "userTypeID", nullable: false })
   userTypeID: number;
 
   @ManyToOne(() => UserTypeTypeOrmEntity, (userType) => userType.id)
-  @JoinColumn({ name: 'userTypeID' })
+  @JoinColumn({ name: "userTypeID" })
   userType: UserTypeTypeOrmEntity;
 
   @CreateDateColumn()
