@@ -14,34 +14,40 @@ export class ProductEntity {
   }
   public validate(): void {
     if (this.id !== null && !Number.isInteger(this.id)) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
-    if (!this.name || this.name.trim() === '') {
-      throw new Error('Name is required');
+    if (!this.name || this.name.trim() === "") {
+      throw new Error("Name is required");
     }
     if (this.name.length < 3) {
-      throw new Error('Name must be at least 3 characters long');
+      throw new Error("Name must be at least 3 characters long");
     }
-    if (this.description.trim() === '') {
-      throw new Error('Description is required');
+    if (this.description.trim() === "") {
+      throw new Error("Description is required");
     }
     if (this.description.length < 50) {
-      throw new Error('Description must be at least 50 characters long');
+      throw new Error("Description must be at least 50 characters long");
     }
     if (this.price < 0) {
-      throw new Error('Price must be greater than or equal to zero');
+      throw new Error("Price must be greater than or equal to zero");
     }
-    if (!this.sku || this.sku.trim() === '') {
-      throw new Error('SKU is required');
+    if (!this.sku || this.sku.trim() === "") {
+      throw new Error("SKU is required");
     }
     if (!Number.isInteger(this.categoryId) || this.categoryId <= 0) {
-      throw new Error('Category ID must be a positive integer');
+      throw new Error("Category ID must be a positive integer");
     }
-    if (this.createdAt instanceof Date === false || isNaN(this.createdAt.getTime())) {
-      throw new Error('Created at must be a valid Date');
+    if (
+      this.createdAt instanceof Date === false ||
+      isNaN(this.createdAt.getTime())
+    ) {
+      throw new Error("Created at must be a valid Date");
     }
-    if (this.updatedAt instanceof Date === false || isNaN(this.updatedAt.getTime())) {
-      throw new Error('Updated at must be a valid Date');
+    if (
+      this.updatedAt instanceof Date === false ||
+      isNaN(this.updatedAt.getTime())
+    ) {
+      throw new Error("Updated at must be a valid Date");
     }
   }
   static create(
@@ -89,40 +95,40 @@ export class ProductEntity {
   }
   incrementStock(amount: number): void {
     if (!Number.isInteger(amount) || amount <= 0) {
-      throw new Error('Amount must be a positive integer');
+      throw new Error("Amount must be a positive integer");
     }
     this.stock += amount;
     this.updatedAt = new Date();
   }
   decrementStock(amount: number): void {
     if (!Number.isInteger(amount) || amount <= 0) {
-      throw new Error('Amount must be a positive integer');
+      throw new Error("Amount must be a positive integer");
     }
     if (this.stock - amount < 0) {
-      throw new Error('Insufficient stock');
+      throw new Error("Insufficient stock");
     }
     this.stock -= amount;
     this.updatedAt = new Date();
   }
   updatePrice(newPrice: number): void {
     if (newPrice < 0) {
-      throw new Error('Price must be greater than or equal to zero');
+      throw new Error("Price must be greater than or equal to zero");
     }
     this.price = newPrice;
     this.updatedAt = new Date();
   }
   updateDescription(newDescription: string): void {
     if (newDescription.length > 500) {
-      throw new Error('Description cannot exceed 500 characters');
-    } else if (newDescription.trim() === '') {
-      throw new Error('Description is required');
+      throw new Error("Description cannot exceed 500 characters");
+    } else if (newDescription.trim() === "") {
+      throw new Error("Description is required");
     }
     this.description = newDescription;
     this.updatedAt = new Date();
   }
   updateName(newName: string): void {
-    if (!newName || newName.trim() === '') {
-      throw new Error('Name is required');
+    if (!newName || newName.trim() === "") {
+      throw new Error("Name is required");
     }
     this.name = newName;
     this.updatedAt = new Date();

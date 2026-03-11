@@ -10,17 +10,27 @@ export class productCategoryEntity {
   }
   public validate(): void {
     if (this.id <= 0) {
-      throw new Error('ID must be a positive number');
+      throw new Error("ID must be a positive number");
     }
     if (!this.productId) {
-      throw new Error('Product ID is required');
+      throw new Error("Product ID is required");
     }
     if (!this.categoryId) {
-      throw new Error('Category ID is required');
+      throw new Error("Category ID is required");
     }
   }
-  static create(id: number, productId: number, categoryId: number): productCategoryEntity {
-    return new productCategoryEntity(id, productId, categoryId, new Date(), new Date());
+  static create(
+    id: number,
+    productId: number,
+    categoryId: number,
+  ): productCategoryEntity {
+    return new productCategoryEntity(
+      id,
+      productId,
+      categoryId,
+      new Date(),
+      new Date(),
+    );
   }
   static restore(
     id: number,
@@ -29,7 +39,13 @@ export class productCategoryEntity {
     createdAt: Date,
     updatedAt: Date,
   ): productCategoryEntity {
-    return new productCategoryEntity(id, productId, categoryId, createdAt, updatedAt);
+    return new productCategoryEntity(
+      id,
+      productId,
+      categoryId,
+      createdAt,
+      updatedAt,
+    );
   }
   getId(): number {
     return this.id;
