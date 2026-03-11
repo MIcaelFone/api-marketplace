@@ -1,4 +1,4 @@
-import { OrderStatusEnum } from '@domain/enum/order-status.enum';
+import { OrderStatusEnum } from "@domain/enum/order-status.enum";
 export class OrderEntity {
   constructor(
     private readonly id: number | null,
@@ -13,30 +13,36 @@ export class OrderEntity {
   }
   public validate(): void {
     if (this.id !== null && !Number.isInteger(this.id)) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
     if (!Number.isInteger(this.userId) || this.userId <= 0) {
-      throw new Error('User ID must be a positive integer');
+      throw new Error("User ID must be a positive integer");
     }
     if (!Number.isInteger(this.addressId) || this.addressId <= 0) {
-      throw new Error('Address ID must be a positive integer');
+      throw new Error("Address ID must be a positive integer");
     }
     if (this.totalAmount < 0) {
-      throw new Error('Total amount must be greater than or equal to zero');
+      throw new Error("Total amount must be greater than or equal to zero");
     }
     if (
-      !Object.values(OrderStatusEnum).includes(this.orderStatus as keyof typeof OrderStatusEnum)
+      !Object.values(OrderStatusEnum).includes(
+        this.orderStatus as keyof typeof OrderStatusEnum,
+      )
     ) {
-      throw new Error('Invalid order status');
+      throw new Error("Invalid order status");
     }
     if (!(this.createdAt instanceof Date) || isNaN(this.createdAt.getTime())) {
-      throw new Error('Created at must be a valid Date');
+      throw new Error("Created at must be a valid Date");
     }
     if (!(this.updatedAt instanceof Date) || isNaN(this.updatedAt.getTime())) {
-      throw new Error('Updated at must be a valid Date');
+      throw new Error("Updated at must be a valid Date");
     }
   }
-  static create(userId: number, addressId: number, totalAmount: number): OrderEntity {
+  static create(
+    userId: number,
+    addressId: number,
+    totalAmount: number,
+  ): OrderEntity {
     return new OrderEntity(
       null,
       userId,
@@ -56,34 +62,42 @@ export class OrderEntity {
     createdAt: Date,
     updatedAt: Date,
   ): OrderEntity {
-    return new OrderEntity(id, userId, addressId, totalAmount, orderStatus, createdAt, updatedAt);
+    return new OrderEntity(
+      id,
+      userId,
+      addressId,
+      totalAmount,
+      orderStatus,
+      createdAt,
+      updatedAt,
+    );
   }
   processOrder(): void {
     if (this.orderStatus !== OrderStatusEnum.PENDING) {
-      throw new Error('Only pending orders can be processed');
+      throw new Error("Only pending orders can be processed");
     }
     this.orderStatus = OrderStatusEnum.PROCESSING;
     this.updatedAt = new Date();
   }
   deliverOrder(): void {
     if (this.orderStatus === OrderStatusEnum.DELIVERED) {
-      throw new Error('Order is already delivered');
+      throw new Error("Order is already delivered");
     } else if (this.orderStatus !== OrderStatusEnum.SHIPPED) {
-      throw new Error('Only shipped orders can be marked as delivered');
+      throw new Error("Only shipped orders can be marked as delivered");
     }
     this.orderStatus = OrderStatusEnum.DELIVERED;
     this.updatedAt = new Date();
   }
   cancelOrder(): void {
     if (this.orderStatus === OrderStatusEnum.DELIVERED) {
-      throw new Error('Delivered orders cannot be cancelled');
+      throw new Error("Delivered orders cannot be cancelled");
     }
     this.orderStatus = OrderStatusEnum.CANCELLED;
     this.updatedAt = new Date();
   }
   shipOrder(): void {
     if (this.orderStatus !== OrderStatusEnum.PROCESSING) {
-      throw new Error('Only processing orders can be shipped');
+      throw new Error("Only processing orders can be shipped");
     }
     this.orderStatus = OrderStatusEnum.SHIPPED;
     this.updatedAt = new Date();
