@@ -4,8 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-} from 'typeorm';
-@Entity('categories')
+} from "typeorm";
+@Entity("categories")
 export class CategoryTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
