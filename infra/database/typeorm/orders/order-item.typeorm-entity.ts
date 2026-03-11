@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-} from 'typeorm';
-import { OrderTypeOrmEntity } from './order.typeorm-entity';
-import { ProductTypeOrmEntity } from '../product/product.typeorm-entity';
-@Entity('order_items')
+} from "typeorm";
+import { OrderTypeOrmEntity } from "./order.typeorm-entity";
+import { ProductTypeOrmEntity } from "../product/product.typeorm-entity";
+@Entity("order_items")
 export class OrderItemTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,20 +18,20 @@ export class OrderItemTypeOrmEntity {
   orderId: number;
 
   @ManyToOne(() => OrderTypeOrmEntity, (order) => order.id)
-  @JoinColumn({ name: 'orderId' })
+  @JoinColumn({ name: "orderId" })
   order: OrderTypeOrmEntity;
 
   @Column()
   productId: number;
 
   @ManyToOne(() => ProductTypeOrmEntity, (product) => product.id)
-  @JoinColumn({ name: 'productId' })
+  @JoinColumn({ name: "productId" })
   product: ProductTypeOrmEntity;
 
   @Column({ nullable: false })
   quantity: number;
 
-  @Column({ nullable: false, type: 'decimal', precision: 10, scale: 2 })
+  @Column({ nullable: false, type: "decimal", precision: 10, scale: 2 })
   price: number;
 
   @Column({ nullable: false })

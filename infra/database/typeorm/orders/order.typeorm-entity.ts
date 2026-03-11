@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-} from 'typeorm';
-import { UserTypeOrmEntity } from '../user/user.typeorm-entity';
-import { AddressTypeOrmEntity } from '../address/address.typeorm-entity';
-@Entity('orders')
+} from "typeorm";
+import { UserTypeOrmEntity } from "../user/user.typeorm-entity";
+import { AddressTypeOrmEntity } from "../address/address.typeorm-entity";
+@Entity("orders")
 export class OrderTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,17 +18,17 @@ export class OrderTypeOrmEntity {
   userId: number;
 
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.id)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: "userId" })
   user: UserTypeOrmEntity;
 
   @Column()
   addressId: number;
 
   @ManyToOne(() => AddressTypeOrmEntity, (address) => address.id)
-  @JoinColumn({ name: 'addressId' })
+  @JoinColumn({ name: "addressId" })
   address: AddressTypeOrmEntity;
 
-  @Column({ nullable: false, type: 'decimal', precision: 10, scale: 2 })
+  @Column({ nullable: false, type: "decimal", precision: 10, scale: 2 })
   totalAmount: number;
 
   @Column({ nullable: false })
