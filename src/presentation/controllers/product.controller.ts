@@ -18,7 +18,7 @@ import { UserRoles } from "../../../domain/enum/user-roles.enum";
 export class ProductController {
   @UseGuards(JwtAuthGuard)
   @Get()
-  async listProducts() {
+  listProducts() {
     return {
       message: "Lista de produtos",
       data: [],
@@ -27,7 +27,7 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Get(":id")
-  async getProduct(@Param("id") id: string) {
+  getProduct(@Param("id") id: string) {
     return {
       message: `Detalhes do produto ${id}`,
       data: {},
@@ -37,17 +37,17 @@ export class ProductController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @Roles(UserRoles.SELLER, UserRoles.ADMIN)
-  async createProduct(@Body() createProductDto: any) {
+  createProduct(@Body() createProductDto: unknown) {
     return {
       message: "Produto criado com sucesso",
       data: createProductDto,
     };
   }
+
   @UseGuards(JwtAuthGuard)
   @Put(":id")
   @Roles(UserRoles.SELLER, UserRoles.ADMIN)
-  
-  async updateProduct(@Param("id") id: string, @Body() updateProductDto: any) {
+  updateProduct(@Param("id") id: string, @Body() updateProductDto: unknown) {
     return {
       message: `Produto ${id} atualizado com sucesso`,
       data: updateProductDto,
@@ -56,7 +56,7 @@ export class ProductController {
 
   @Delete(":id")
   @Roles(UserRoles.ADMIN)
-  async deleteProduct(@Param("id") id: string) {
+  deleteProduct(@Param("id") id: string) {
     return {
       message: `Produto ${id} deletado com sucesso`,
     };
