@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-} from 'typeorm';
-import { ProductTypeOrmEntity } from './product.typeorm-entity';
-import { CategoryTypeOrmEntity } from '../categories/category.typeorm-entity';
-@Entity('product_categories')
+} from "typeorm";
+import { ProductTypeOrmEntity } from "./product.typeorm-entity";
+import { CategoryTypeOrmEntity } from "../categories/category.typeorm-entity";
+@Entity("product_categories")
 export class ProductCategoryTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,14 +18,14 @@ export class ProductCategoryTypeOrmEntity {
   productId: number;
 
   @ManyToOne(() => ProductTypeOrmEntity, (product) => product.id)
-  @JoinColumn({ name: 'productId' })
+  @JoinColumn({ name: "productId" })
   product: ProductTypeOrmEntity;
 
   @Column()
   categoryId: number;
 
   @ManyToOne(() => CategoryTypeOrmEntity, (category) => category.id)
-  @JoinColumn({ name: 'categoryId' })
+  @JoinColumn({ name: "categoryId" })
   category: CategoryTypeOrmEntity;
 
   @CreateDateColumn()

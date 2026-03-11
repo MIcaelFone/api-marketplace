@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-} from 'typeorm';
-@Entity('products')
+} from "typeorm";
+@Entity("products")
 export class ProductTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,7 +16,7 @@ export class ProductTypeOrmEntity {
   @Column({ nullable: false })
   description: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column("decimal", { precision: 10, scale: 2 })
   price: number;
 
   @Column({ nullable: false })
