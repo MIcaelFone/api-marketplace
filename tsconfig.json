@@ -34,7 +34,7 @@
       "@infra/*": ["infra/*"]
     }
   },
-  "include": ["src/**/*", "domain/**/*", "application/**/*", "infra/**/*"],
+  "include": ["src/**/*", "domain/**/*", "application/**/*", "infra/**/*", "presentation/**/*"],
   "exclude": [
     "node_modules",
     "dist",
