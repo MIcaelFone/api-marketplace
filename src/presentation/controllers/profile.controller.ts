@@ -14,7 +14,7 @@ export class ProfileController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getProfile(@Request() req: AuthenticatedRequest) {
-    const userId = req.user.userId                                                                                                                                                                                                                                                                                                                                                                                                                              
+    const userId = req.user.userId;
     const session = await this.sessionRepository.getSession(Number(userId));
 
     if (!session) {
