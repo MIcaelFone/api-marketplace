@@ -6,10 +6,10 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
-} from 'typeorm';
-import { OrderTypeOrmEntity } from '../orders/order.typeorm-entity';
+} from "typeorm";
+import { OrderTypeOrmEntity } from "../orders/order.typeorm-entity";
 
-@Entity('payments')
+@Entity("payments")
 export class PaymentsTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,10 +18,10 @@ export class PaymentsTypeOrmEntity {
   orderId: number;
 
   @ManyToOne(() => OrderTypeOrmEntity, (order) => order.id)
-  @JoinColumn({ name: 'orderId' })
+  @JoinColumn({ name: "orderId" })
   order: OrderTypeOrmEntity;
 
-  @Column({ nullable: false, type: 'decimal', precision: 10, scale: 2 })
+  @Column({ nullable: false, type: "decimal", precision: 10, scale: 2 })
   amount: number;
 
   @Column({ nullable: false })
