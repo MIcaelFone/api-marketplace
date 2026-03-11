@@ -19,7 +19,7 @@ import { UserModule } from "./modules/user.module";
 
     // Módulos de Negócio
     AuthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [],
   providers: [],
