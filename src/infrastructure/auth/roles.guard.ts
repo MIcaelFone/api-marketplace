@@ -6,14 +6,19 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { ROLES_KEY } from "./roles.decorator";
-import { UserRoles } from "../../../domain/enum/user-roles.enum";
+import { UserRoleType } from "../../../domain/enum/user-roles.enum";
+
+interface AuthUser {
+  role: UserRoleType;
+  roles?: UserRoleType[];
+}
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<typeof UserRoles[]>(
+    const requiredRoles = this.reflector.getAllAndOverride<UserRoleType[]>(
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
     );
@@ -22,7 +27,7 @@ export class RolesGuard implements CanActivate {
       return true; // Se não há roles definidas, permite acesso
     }
 
-    const { user } = context.switchToHttp().getRequest();
+    const { user } = context.switchToHttp().getRequest<{ user: AuthUser }>();
 
     if (!user) {
       throw new ForbiddenException("User not authenticated");
