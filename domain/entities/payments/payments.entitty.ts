@@ -1,4 +1,4 @@
-import { PaymentStatusEnum } from '../../enum/payment-status.enum';
+import { PaymentStatusEnum } from "../../enum/payment-status.enum";
 export class PaymentsEntity {
   constructor(
     private readonly id: number,
@@ -12,26 +12,30 @@ export class PaymentsEntity {
   }
   public validate(): void {
     if (this.id !== null && !Number.isInteger(this.id)) {
-      throw new Error('ID must be an integer or null');
+      throw new Error("ID must be an integer or null");
     }
     if (!Number.isInteger(this.orderId) || this.orderId <= 0) {
-      throw new Error('Address ID must be a positive integer');
+      throw new Error("Address ID must be a positive integer");
     }
     if (
       !Object.values(PaymentStatusEnum).includes(
         this.paymentStatus as keyof typeof PaymentStatusEnum,
       )
     ) {
-      throw new Error('Invalid order status');
+      throw new Error("Invalid order status");
     }
     if (!(this.createdAt instanceof Date) || isNaN(this.createdAt.getTime())) {
-      throw new Error('Created at must be a valid Date');
+      throw new Error("Created at must be a valid Date");
     }
     if (!(this.updatedAt instanceof Date) || isNaN(this.updatedAt.getTime())) {
-      throw new Error('Updated at must be a valid Date');
+      throw new Error("Updated at must be a valid Date");
     }
   }
-  static create(id: number, productId: number, categoryId: number): PaymentsEntity {
+  static create(
+    id: number,
+    productId: number,
+    categoryId: number,
+  ): PaymentsEntity {
     return new PaymentsEntity(
       id,
       productId,
@@ -49,11 +53,18 @@ export class PaymentsEntity {
     createdAt: Date,
     updatedAt: Date,
   ): PaymentsEntity {
-    return new PaymentsEntity(id, productId, categoryId, status, createdAt, updatedAt);
+    return new PaymentsEntity(
+      id,
+      productId,
+      categoryId,
+      status,
+      createdAt,
+      updatedAt,
+    );
   }
   completePayment(): void {
     if (this.paymentStatus !== PaymentStatusEnum.PENDING) {
-      throw new Error('Only pending payments can be completed');
+      throw new Error("Only pending payments can be completed");
     }
 
     this.paymentStatus = PaymentStatusEnum.COMPLETED;
@@ -61,14 +72,14 @@ export class PaymentsEntity {
   }
   failPayment(): void {
     if (this.paymentStatus !== PaymentStatusEnum.PENDING) {
-      throw new Error('Only pending payments can be failed');
+      throw new Error("Only pending payments can be failed");
     }
     this.paymentStatus = PaymentStatusEnum.FAILED;
     this.updatedAt = new Date();
   }
   refundPayment(): void {
     if (this.paymentStatus !== PaymentStatusEnum.COMPLETED) {
-      throw new Error('Only completed payments can be refunded');
+      throw new Error("Only completed payments can be refunded");
     }
     this.paymentStatus = PaymentStatusEnum.REFUNDED;
     this.updatedAt = new Date();
