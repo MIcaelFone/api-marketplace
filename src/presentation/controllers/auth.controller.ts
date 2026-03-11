@@ -4,8 +4,9 @@ import { LoginUseCase } from "../../../application/use-cases/auth/login.use-case
 import { LogoutUseCase } from "../../../application/use-cases/auth/logout.use-case";
 import { JwtAuthGuard } from "../../infrastructure/auth/jwt-auth.guard";
 
-interface AuthenticatedRequest extends Request {
+interface AuthenticatedRequest {
   user: { userId: string };
+  headers: { authorization?: string };
 }
 
 @Controller("auth")
@@ -25,7 +26,7 @@ export class AuthController {
   async logout(
     @Request() req: AuthenticatedRequest,
   ): Promise<{ message: string }> {
-    const authHeader = (req.headers as any).authorization || "";
+    const authHeader = req.headers.authorization ?? "";
     const token = authHeader.replace("Bearer ", "");
     return this.logoutUseCase.execute(Number(req.user.userId), token);
   }
