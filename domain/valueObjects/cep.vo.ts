@@ -4,15 +4,15 @@ export class CEP {
     this.validate();
   }
   private validate(): void {
-    if (!this.cep || this.cep.trim() === '') {
-      throw new Error('CEP is required');
+    if (!this.cep || this.cep.trim() === "") {
+      throw new Error("CEP is required");
     }
-    const cleanCep = this.cep.replace('-', '');
+    const cleanCep = this.cep.replace("-", "");
     if (cleanCep.length !== 8) {
-      throw new Error('CEP must have 8 digits');
+      throw new Error("CEP must have 8 digits");
     }
     if (!CEP.CEP_REGEX.test(this.cep)) {
-      throw new Error('CEP format is invalid');
+      throw new Error("CEP format is invalid");
     }
   }
   static create(cep: string): CEP {
@@ -22,7 +22,7 @@ export class CEP {
     return new CEP(cep);
   }
   getValue(): string {
-    return this.cep.replace('-', '');
+    return this.cep.replace("-", "");
   }
   getFormatted(): string {
     return `${this.cep.substring(0, 5)}-${this.cep.substring(5)}`;
