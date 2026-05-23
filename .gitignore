@@ -43,6 +43,9 @@ lerna-debug.log*
 .env.production.local
 !.env.example
 
+# Claude Code (local config)
+.claude/
+
 # Banco de Dados
 *.sqlite
 *.sqlite3
